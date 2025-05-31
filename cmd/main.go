@@ -14,6 +14,14 @@ import (
 )
 
 func main() {
+	// Initialize database first
+	dbPath := "passwords.db"
+	db, err := database.NewDB(dbPath)
+	if err != nil {
+		log.Fatal("Error initializing database:", err)
+	}
+	defer db.Close()
+
 	// Get master password
 	fmt.Print("Enter master password: ")
 	masterPassword, err := term.ReadPassword(int(syscall.Stdin))
@@ -26,16 +34,11 @@ func main() {
 		log.Fatal("Master password cannot be empty")
 	}
 
-	// Initialize database
-	dbPath := "passwords.db"
-	db, err := database.NewDB(dbPath)
+	// Initialize encryption with database connection
+	encryptor, err := crypto.NewEncryptor(string(masterPassword), db)
 	if err != nil {
-		log.Fatal("Error initializing database:", err)
+		log.Fatal("Error initializing encryption:", err)
 	}
-	defer db.Close()
-
-	// Initialize encryption
-	encryptor := crypto.NewEncryptor(string(masterPassword))
 
 	// Initialize services
 	passwordService := services.NewPasswordService(db, encryptor)
