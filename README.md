@@ -6,7 +6,7 @@ A secure, modular password manager written in Go with SQLite database backend.
 
 - ✅ **Secure Encryption**: AES-256-GCM encryption with PBKDF2 key derivation
 - ✅ **Password Generation**: Customizable password generation with strength validation
-- ✅ **SQLite Database**: Local database storage
+- ✅ **Pure Go SQLite**: Uses modernc.org/sqlite (no CGO required)
 - ✅ **Modular Architecture**: Clean, maintainable code structure
 - ✅ **CLI Interface**: Easy-to-use command-line interface
 - ✅ **Search Functionality**: Search passwords by service, username, or URL
@@ -49,3 +49,11 @@ Follow the CLI prompts to:
 - Master password is used for key derivation with PBKDF2
 - Encrypted passwords are stored in local SQLite database
 - Passwords are never displayed in plain text in list/search views
+- Uses pure Go implementation of SQLite (no CGO required)
+
+## Technical Details
+
+- Built with Go 1.23+
+- Uses modernc.org/sqlite for database operations
+- No external C dependencies required
+- Cross-platform support (Windows, Linux, macOS)
